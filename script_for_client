@@ -1,0 +1,12 @@
+#!/bin/bash
+cd /home/user/ssh_get/ssh_downloads
+for FILE in $(cat /home/user/ssh_get/ssh_downloads/files);
+	do
+		a=`hostname -I`;
+		read -a b <<< $a;
+		fname=info_$b.log;
+		touch /home/user/ssh_get/$fname;
+		yum install $FILE -y 2> /home/user/ssh_get/$fname;
+	done
+cd ..
+#rm -rf /home/user/ssh_get/ssh_downloads

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd /home/user/ssh/ssh_downloads
+#Создаю файл с названиями пакетов для установки с помощью перенаправления потока вывода
+ls > files
+arp -a > /home/user/ssh/ssh_ipTEMP
+awk '/ether/{print $2}' /home/user/ssh/ssh_ipTEMP > /home/user/ssh/ssh_ip
+sed -i 's/[()]//g' /home/user/ssh/ssh_ip
+rm -f /home/user/ssh/ssh_ipTEMP
+#Удаляю первую строку файла, где содержится слово files (оно может вызвать проблемы в дальнейшем)
+sed -i '/files/d' files
+sed -i '/script_for_client/d' files
+#Запускаю цикл, который смотрит ip-адреса из файла ssh_ip и подключается к ним по ssh
+for HOST in $(cat /home/user/ssh/ssh_ip);
+	do
+# Использовать sshpass -p "****", чтобы убрать просьбу ввести пароль
+		sshpass -p "****" scp -r /home/user/ssh/ssh_downloads root@$HOST:/home/user/ssh_get #2> /home/user/ssh/log/cannot_connect.log; # Перекидываем папку с файлами для установки по ssh
+		sshpass -p "****" ssh root@$HOST "chmod +x /home/user/ssh_get/script_for_client; cd /home/user/ssh_get; ./script_for_client; exit";
+		sshpass -p "****" scp root@$HOST:/home/user/ssh_get/'*.log' /home/user/ssh/log/;
+	done
+
