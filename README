@@ -1,0 +1,30 @@
+# install it:
+# sudo apt install sshpass
+
+# change /.ssh/config (for connection with password Without our intervention):
+# StrictHostKeyChecking = no
+# UserKnownHostsFile = /dev/null
+
+# restart ssh-service (to apply changes):
+# sudo systemctl restart sshd
+
+# sudo chmod +x schript
+                     
+# Save files for install in /ssh_downloads and start ./script
+                     
+# How does the script work?
+# script
+# 1. In the SSH_Downloads folder, we save all the files that we need to install on customer machines
+# 2. Save the name of all files for installation in the files file
+# 3. Using ARP --A we get all available customers and save them in the SSH_IPTEMP file
+# 4. We extract from the output of ARP -A only IP addresses and save them ssh_ip, delete the temporary file
+# 5. Run the cycle by IP addresses from the file, connect to each host on a predetermined route password* and transfer files for installation with the Script_For_Client script script
+
+# script_for_client
+# 1. It is performed directly on the client’s device, without stopping the transfer of files.
+# 2. In the cycle reads the name of the files for installation and starts installing
+# 3. also writes out a report on errors if they occur, saving the file in the form of [IP address] .log
+# Ready
+
+# In the form of a rut password - YES, it is as UNSAFE as possible.
+# Since the password is transmitted in open form, it can easily be intercepted. I plan to fix it. The script was written in conditions of limited time, just to work out. The best option would be to use SSH key.
