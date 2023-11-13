@@ -26,5 +26,5 @@
 # 3. also writes out a report on errors if they occur, saving the file in the form of [IP address] .log
 # Ready
 
-# In the form of a rut password - YES, it is as UNSAFE as possible.
+# In the form of a root password - YES, it is as UNSAFE as possible.
 # Since the password is transmitted in open form, it can easily be intercepted. I plan to fix it. The script was written in conditions of limited time, just to work out. The best option would be to use SSH key.
